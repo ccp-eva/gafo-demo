@@ -1,0 +1,122 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Material Design CDN CSS -->
+    <link
+    crossorigin="anonymous"
+    integrity="sha384-lhcMJt26emnUFHEA1iymi2XtYC44BU+NNP+9oCZ+RqUTUiyiqkR4qVEUP2J6zVgM"
+    rel="stylesheet"
+    href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    
+    <!-- Material Design CDN JS -->
+    <script
+    crossorigin="anonymous"
+    integrity="sha384-+YtOobXId0jtJmCVn5Wq2bnwsGQ7QbByBu2tPgHzIjEEwna/5qDMBQvde19redzQ"
+    src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"
+    ></script>
+    
+    <!-- Material Design Icons -->
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <!-- Typography -->
+    <link
+    rel="stylesheet"
+    href="https://use.typekit.net/ess7xmw.css"
+    integrity="sha384-B4QR9emr2CNg5g6K9W06RfYz7wqssjpm+Whm/B7kSpeaIkhWzCS5Td7xltai8emb"
+    crossorigin="anonymous"
+    />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./images/favicon.ico" />
+    <link rel="icon" href="./images/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
+    <link rel="manifest" href="app.webmanifest" />
+    
+    <!-- User Style/JavaScript -->
+    <link rel="stylesheet" href="./css/style-lp.css" />
+    <script src="./js/app.js" defer></script>
+    <script src="./js/index.js" defer></script>
+    <title>Max-Planck-Kinderstudie</title>
+  </head>
+  
+  <body>
+    <div id="flex-wrapper">
+      <div class="flex-item">
+        
+        <h1 class="heading">Willkommen in unserem virtuellen Max-Planck-Institut!</h1>
+
+        <br>
+        
+        <p>
+          <strong>
+            Bitte trage hier die Online-Studien ID vom Kind ein:
+            <br>
+            ACHTE UNBEDINGT AUF GROSS- UND KLEINSCHREIBUNG!
+          </strong>
+        </p>
+
+        <label class="mdc-text-field mdc-text-field--filled">
+          <span class="mdc-text-field__ripple"></span>
+          <span class="mdc-floating-label" id="my-label-id"></span>
+          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" maxlength="8">
+          <span class="mdc-line-ripple"></span>
+        </label>
+        <div class="mdc-text-field-helper-line">
+          <div class="mdc-text-field-character-counter">0 / 8</div>
+        </div>
+
+        <br> <br> <br>
+
+        <p>
+          <strong>
+            Bitte wähle die Studienversion aus:
+          </strong>
+        </p>
+
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="radio-box" name="radios" unchecked>
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+          </div><br>
+          <label for="radio-box">Boxen</label>
+        </div>
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="radio-hedge" name="radios" unchecked>
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+          </div>
+          <label for="radio-hedge">Hecke</label>
+        </div>
+
+        <br> <br> <br>
+        <div id="button-center-wrapper">
+          <button
+            type="button"
+            class="ccp-button confirm mdc-button mdc-button--raised"
+            id="button-center-item"
+            disabled
+          >
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label"><strong>ZUR STUDIE</strong></span>
+          </button>
+        </div>
+      
+      
+      <!-- end flex-item -->
+      </div>
+    
+      <!-- end flex-wrapper -->
+    </div> 
+  </body>
+</html>
