@@ -123,9 +123,10 @@ DetectRTC.load(() => {
 
 // ---------------------------------------------------------------------------------------------------------------------
 // LANGUAGE SETTINGS
+// FOR DEMO: choose on welcome page which language
 // ---------------------------------------------------------------------------------------------------------------------
-// exp.subjData.lang = url.searchParams.get('lang') || 'en';
-exp.subjData.lang = getBrowserLang();
+exp.subjData.lang = url.searchParams.get('lang') || 'en';
+// exp.subjData.lang = getBrowserLang();
 
 let welcomeSrc; let goodbyeSrc;
 let promptGeneralSrc; let promptHedgeSrc; let promptBoxSrc; let promptTouchSrc; let promptTouchLongSrc;

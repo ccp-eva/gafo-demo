@@ -19,7 +19,5 @@ export default () => {
   // if neither de nor en is preferred, use english as default language
   if (lang == null) lang = 'en';
 
-  // TODO!!! after testing, delete this!!
-  lang = 'de';
   return lang;
 };
