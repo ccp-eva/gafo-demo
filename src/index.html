@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Material Design CDN CSS -->
     <link
-    crossorigin="anonymous"
-    integrity="sha384-lhcMJt26emnUFHEA1iymi2XtYC44BU+NNP+9oCZ+RqUTUiyiqkR4qVEUP2J6zVgM"
     rel="stylesheet"
     href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
     />
     
     <!-- Material Design CDN JS -->
     <script
-    crossorigin="anonymous"
-    integrity="sha384-+YtOobXId0jtJmCVn5Wq2bnwsGQ7QbByBu2tPgHzIjEEwna/5qDMBQvde19redzQ"
     src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"
     ></script>
     
@@ -27,8 +23,6 @@
     <link
     rel="stylesheet"
     href="https://use.typekit.net/ess7xmw.css"
-    integrity="sha384-B4QR9emr2CNg5g6K9W06RfYz7wqssjpm+Whm/B7kSpeaIkhWzCS5Td7xltai8emb"
-    crossorigin="anonymous"
     />
     
     <!-- Favicon -->
@@ -48,58 +42,103 @@
     <div id="flex-wrapper">
       <div class="flex-item">
         
-        <h1 class="heading">Willkommen in unserem virtuellen Max-Planck-Institut!</h1>
+        <br>
+
+        <h1 class="heading">Welcome to our gaze following task!</h1>
+
+        <p> 
+          Thanks a lot for your interest in our interactive online study! <br>
+          To cite our task in publications please use:
+        </p>
+        <p>
+          Prein,  Bohn,  Maurits,  Kalinke, & Haun (2021). 
+          <em>
+            Measuring individual development of gaze following  [Unpublished material].
+          </em> <br>
+          URL: https://github.com/ccp-eva/gafo-demo
+        </p>
 
         <br>
-        
+        <hr style="width:100%; text-align:left; margin-left:0">
+        <br>
+
         <p>
           <strong>
-            Bitte trage hier die Online-Studien ID vom Kind ein:
-            <br>
-            ACHTE UNBEDINGT AUF GROSS- UND KLEINSCHREIBUNG!
+            Please enter an alphanumeric participant ID.
+            Pay attention to upper and lower case letters!
           </strong>
         </p>
 
         <label class="mdc-text-field mdc-text-field--filled">
           <span class="mdc-text-field__ripple"></span>
           <span class="mdc-floating-label" id="my-label-id"></span>
-          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" maxlength="8">
+          <input class="mdc-text-field__input" type="text" aria-labelledby="my-label-id" maxlength="10">
           <span class="mdc-line-ripple"></span>
         </label>
+
         <div class="mdc-text-field-helper-line">
-          <div class="mdc-text-field-character-counter">0 / 8</div>
+          <div class="mdc-text-field-character-counter">0 / 10</div>
         </div>
 
-        <br> <br> <br>
+        <br>
 
         <p>
           <strong>
-            Bitte wähle die Studienversion aus:
+            Choose a study version:
           </strong>
         </p>
 
         <div class="mdc-form-field">
           <div class="mdc-radio">
-              <input class="mdc-radio__native-control" type="radio" id="radio-box" name="radios" unchecked>
+              <input class="mdc-radio__native-control" type="radio" id="radio-box" name="radios-v" unchecked>
               <div class="mdc-radio__background">
                 <div class="mdc-radio__outer-circle"></div>
                 <div class="mdc-radio__inner-circle"></div>
               </div>
           </div><br>
-          <label for="radio-box">Boxen</label>
+          <label for="radio-box">5 Boxes</label>
         </div>
         <div class="mdc-form-field">
           <div class="mdc-radio">
-              <input class="mdc-radio__native-control" type="radio" id="radio-hedge" name="radios" unchecked>
+              <input class="mdc-radio__native-control" type="radio" id="radio-hedge" name="radios-v" unchecked>
               <div class="mdc-radio__background">
                 <div class="mdc-radio__outer-circle"></div>
                 <div class="mdc-radio__inner-circle"></div>
               </div>
           </div>
-          <label for="radio-hedge">Hecke</label>
+          <label for="radio-hedge">Hedge</label>
         </div>
 
-        <br> <br> <br>
+        <br> <br>
+
+        <p>
+          <strong>
+            Choose a language:
+          </strong>
+        </p>
+
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="radio-en" name="radios-lang" unchecked>
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+          </div><br>
+          <label for="radio-en">English</label>
+        </div>
+        <div class="mdc-form-field">
+          <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="radio-de" name="radios-lang" unchecked>
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+          </div>
+          <label for="radio-de">German</label>
+        </div>
+
+        <br> <br>
         <div id="button-center-wrapper">
           <button
             type="button"
@@ -108,7 +147,7 @@
             disabled
           >
             <div class="mdc-button__ripple"></div>
-            <span class="mdc-button__label"><strong>ZUR STUDIE</strong></span>
+            <span class="mdc-button__label"><strong>GO TO STUDY</strong></span>
           </button>
         </div>
       
