@@ -131,7 +131,6 @@ export default (exp) => {
         Wenn Sie auf das Lautsprecher-Symbol klicken, 
         kann Ihr Kind ein kleines Dankeschön und eine Verabschiedung hören. <br> <br>
         Klicken Sie dann auf den “weiter”-Knopf, um zur letzten Seite zu gelangen. 
-        Dort erwartet Sie eine kleine Überraschung. 
         </p>`;
       break;
 
@@ -214,7 +213,7 @@ export default (exp) => {
         Wonderful! 
         Your child did a great job! <br> <br>
         If you click on the speaker button, your child can hear a little goodbye message. <br> <br> 
-        Click on the "next" button to go to the last page. A little surprise awaits you there.
+        Click on the "continue" button to go to the last page.
         </p>`;
       break;
     default:
