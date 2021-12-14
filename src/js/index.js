@@ -92,4 +92,4 @@ const handleContinueClick = (event) => {
   console.log(window.location.href = `https://ccp-odc.eva.mpg.de/gafo-demo/experiment.html?ID=${subjID}&v=${studyversion}&lang=${lang}`);
 };
 
-button.addEventListener('click', handleContinueClick, { capture: false });
+button.addEventListener('click', handleContinueClick);
