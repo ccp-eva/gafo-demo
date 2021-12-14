@@ -3,6 +3,7 @@ const button = document.getElementById('button-center-item');
 let continueIDOK = false;
 let continueVOK = false;
 let continueLOK = false;
+let continueWOK = false;
 
 // FOR INPUT FORM
 const textField = document.querySelector('.mdc-text-field__input');
@@ -19,7 +20,7 @@ const handleInput = (event) => {
   continueIDOK = (document.querySelector('.mdc-text-field__input').value.length > 0);
 
   // enable button when at least one character is entered
-  button.disabled = !(continueIDOK && continueVOK && continueLOK);
+  button.disabled = !(continueIDOK && continueVOK && continueLOK && continueWOK);
 };
 
 textField.addEventListener('keyup', handleInput, { capture: false });
@@ -49,7 +50,7 @@ for (radio in radiosV) {
     continueVOK = true;
     
     // enable submit button
-    button.disabled = !(continueIDOK && continueVOK && continueLOK);
+    button.disabled = !(continueIDOK && continueVOK && continueLOK && continueWOK);
   }
 }
 
@@ -78,7 +79,33 @@ for (radio in radiosLang) {
     continueLOK = true;
     
     // enable submit button
-    button.disabled = !(continueIDOK && continueVOK && continueLOK);
+    button.disabled = !(continueIDOK && continueVOK && continueLOK && continueWOK);
+  }
+}
+
+// FOR WEBCAM RECORIDING
+// get both radio buttons
+const radiosWebcam = document.getElementsByName('radios-webcam');
+let webcam = false;
+
+// when users click on a button...
+for (radio in radiosWebcam) {
+  radiosWebcam[radio].onclick = function() {
+
+      // if first 'yes' button is selected, save consent as true
+      if (this.getAttribute('id') === 'radio-webcam-yes') {
+        webcam = true;
+      }
+      
+      if (this.getAttribute('id') === 'radio-webcam-no') {
+        webcam = false;
+      }
+
+      continueWOK = true;
+      
+      // enable submit button
+      button.disabled = !(continueIDOK && continueVOK && continueLOK && continueWOK);
+
   }
 }
 
@@ -89,7 +116,7 @@ const handleContinueClick = (event) => {
   const subjID = document.querySelector('.mdc-text-field__input').value;
 
   // inhouse variable hardcoded to true for kiga version
-  console.log(window.location.href = `https://ccp-odc.eva.mpg.de/gafo-demo/experiment.html?ID=${subjID}&v=${studyversion}&lang=${lang}`);
+  window.location.href = `https://ccp-odc.eva.mpg.de/gafo-demo/experiment.html?ID=${subjID}&v=${studyversion}&lang=${lang}&webcam=${webcam}`;
 };
 
 button.addEventListener('click', handleContinueClick);
