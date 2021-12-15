@@ -1,6 +1,6 @@
 {
-  "name": "gaze-following",
-  "version": "0.1.0",
+  "name": "gaze-following-demo",
+  "version": "1.0.0",
   "description": "A web-based experiment for gaze following.",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
   "author": "Kalinke & Prein",
   "license": "MIT",
   "dependencies": {
-    "@ccp-eva/media-recorder": "^2.0.8",
+    "@ccp-eva/media-recorder": "^2.1.0",
     "detectrtc": "^1.4.1",
     "gsap": "^3.6.0"
   },

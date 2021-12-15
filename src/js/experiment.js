@@ -1,6 +1,6 @@
 // import animation library
 import { gsap } from 'gsap';
-// import * as mrec from '@ccp-eva/media-recorder'; // NOT NEEDED FOR DEMO
+import * as mrec from '@ccp-eva/media-recorder';
 import * as DetectRTC from 'detectrtc';
 
 import welcomeSrcDe from 'url:../sounds/de/welcome.mp3';
@@ -58,7 +58,7 @@ import getBrowserLang from './getBrowserLang';
 // ---------------------------------------------------------------------------------------------------------------------
 // DEVMODE?
 // ---------------------------------------------------------------------------------------------------------------------
-const devmode = true;
+const devmode = false;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // EXP OBJECT
@@ -80,6 +80,7 @@ exp.subjData.touchScreen = checkForTouchscreen();
 exp.subjData.subjID = url.searchParams.get('ID') || 'testID';
 exp.subjData.inhouse = (url.searchParams.get('inhouse') === 'true') || false;
 exp.subjData.studyversion = url.searchParams.get('v') || 'hedge';
+exp.subjData.webcam = (url.searchParams.get('webcam') === 'true') || false;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // CHECK WHETHER TOUCHSCREEN AND/OR iOS SAFARI
@@ -94,32 +95,31 @@ DetectRTC.load(() => {
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
-// FOR DEMO: NO WEBCAM RECORDING
-// START WEBCAM RECORDING (only if not iOS Safari)
+// FOR DEMO: Conditional Recording based on URL Params (only if not iOS Safari)
 // ---------------------------------------------------------------------------------------------------------------------
-// if (!exp.subjData.iOSSafari) {
-//   mrec.startRecorder({
-//     audio: false,
-//     video: {
-//       frameRate: {
-//         min: 3,
-//         ideal: 5,
-//         max: 30,
-//       },
-//       width: {
-//         min: 160,
-//         ideal: 320,
-//         max: 640,
-//       },
-//       height: {
-//         min: 120,
-//         ideal: 240,
-//         max: 480,
-//       },
-//       facingMode: 'user',
-//     },
-//   });
-// }
+if (!exp.subjData.iOSSafari && exp.subjData.webcam) {
+  mrec.startRecorder({
+    audio: true,
+    video: {
+      frameRate: {
+        min: 10,
+        ideal: 25,
+        max: 30,
+      },
+      width: {
+        min: 640,
+        ideal: 1280,
+        max: 1920,
+      },
+      height: {
+        min: 480,
+        ideal: 720,
+        max: 1080,
+      },
+      facingMode: 'user',
+    },
+  });
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // LANGUAGE SETTINGS
@@ -360,7 +360,7 @@ document.body.addEventListener('touchstart', () => {
 }, { capture: false, once: true });
 
 // ---------------------------------------------------------------------------------------------------------------------
-// NOT NEEDED FOR DEMO
+// NOT NEEDED FOR DEMO (since we download the video)
 // ASYNC PROMISIFIABLE VIDEO UPLOAD FUNCTION
 // ---------------------------------------------------------------------------------------------------------------------
 // async function endRecording() {
@@ -686,6 +686,14 @@ const handleTargetClick = async function tmp(event) {
 
     // save data, download locally
     downloadData(exp.responseLog, exp.subjData.subjID);
+
+    // save the video locally
+    if (!exp.subjData.iOSSafari && exp.subjData.webcam) {
+      mrec.stopRecorder();
+
+      // give some time to create Video Blob
+      setTimeout(() => mrec.downloadVideo(exp.subjData.subjID), 1000);
+    }
 
     // NOT NEEDED FOR DEMO
     // if (!exp.subjData.iOSSafari) await endRecording();
