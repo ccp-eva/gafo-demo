@@ -99,22 +99,22 @@ DetectRTC.load(() => {
 // ---------------------------------------------------------------------------------------------------------------------
 if (!exp.subjData.iOSSafari && exp.subjData.webcam) {
   mrec.startRecorder({
-    audio: false,
+    audio: true,
     video: {
       frameRate: {
-        min: 3,
-        ideal: 5,
+        min: 10,
+        ideal: 25,
         max: 30,
       },
       width: {
         min: 160,
-        ideal: 320,
-        max: 640,
+        ideal: 640,
+        max: 1280,
       },
       height: {
         min: 120,
-        ideal: 240,
-        max: 480,
+        ideal: 480,
+        max: 720,
       },
       facingMode: 'user',
     },
