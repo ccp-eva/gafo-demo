@@ -4,9 +4,11 @@
 
 # 👀 Balloon Finding Task
 
-> A gaze following browser game: https://ccp-odc.eva.mpg.de/gafo-demo/
+> A browser game to understand gaze cues
 
-## Demo
+**🎮 Live Demo: https://ccp-odc.eva.mpg.de/gafo-demo/**
+
+## Preview
 
 ![](docs/balloon-finding-game-gafo-demo.gif)
 
@@ -17,7 +19,7 @@ This interactive browser game tracks your click responses and other metrics to s
 ### Parameters
 
 - German and English language support
-- Optional webcam recrodings
+- Optional webcam recording
 - Gaming Modes: (1) a hedge version and (2) a box version. See here:
 
 ![](docs/game-versions.png)
