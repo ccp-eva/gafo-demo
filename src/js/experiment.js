@@ -58,7 +58,7 @@ import getBrowserLang from './getBrowserLang';
 // ---------------------------------------------------------------------------------------------------------------------
 // DEVMODE?
 // ---------------------------------------------------------------------------------------------------------------------
-const devmode = false;
+const devmode = true;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // EXP OBJECT
@@ -78,9 +78,9 @@ exp.subjData = {};
 // use id parameter’s value if available else use 'testID'
 exp.subjData.touchScreen = checkForTouchscreen();
 exp.subjData.subjID = url.searchParams.get('ID') || 'testID';
-exp.subjData.inhouse = (url.searchParams.get('inhouse') === 'true') || false;
+exp.subjData.inhouse = url.searchParams.get('inhouse') === 'true' || false;
 exp.subjData.studyversion = url.searchParams.get('v') || 'hedge';
-exp.subjData.webcam = (url.searchParams.get('webcam') === 'true') || false;
+exp.subjData.webcam = url.searchParams.get('webcam') === 'true' || false;
 
 // ---------------------------------------------------------------------------------------------------------------------
 // CHECK WHETHER TOUCHSCREEN AND/OR iOS SAFARI
@@ -128,11 +128,22 @@ if (!exp.subjData.iOSSafari && exp.subjData.webcam) {
 exp.subjData.lang = url.searchParams.get('lang') || 'en';
 // exp.subjData.lang = getBrowserLang();
 
-let welcomeSrc; let goodbyeSrc;
-let promptGeneralSrc; let promptHedgeSrc; let promptBoxSrc; let promptTouchSrc; let promptTouchLongSrc;
+let welcomeSrc;
+let goodbyeSrc;
+let promptGeneralSrc;
+let promptHedgeSrc;
+let promptBoxSrc;
+let promptTouchSrc;
+let promptTouchLongSrc;
 let touch1Src;
-let famHedge1Src; let testHedge1Src; let testHedge2Src; let testHedge3Src;
-let famBox1Src; let testBox1Src; let testBox2Src; let testBox3Src;
+let famHedge1Src;
+let testHedge1Src;
+let testHedge2Src;
+let testHedge3Src;
+let famBox1Src;
+let testBox1Src;
+let testBox2Src;
+let testBox3Src;
 
 switch (exp.subjData.lang) {
   case 'de':
@@ -200,7 +211,9 @@ exp.subjData.offsetHeight = document.body.offsetHeight;
 // ADD INSTRUCTIONS TEXT
 // ---------------------------------------------------------------------------------------------------------------------
 // add text via rect => foreignObject => innerHTML
-const foreignObjects = Array.from(document.querySelectorAll('[id^="foreign-object"]'));
+const foreignObjects = Array.from(
+  document.querySelectorAll('[id^="foreign-object"]'),
+);
 foreignObjects.forEach((elem) => {
   const obj = document.createElementNS(
     'http://www.w3.org/2000/svg',
@@ -220,10 +233,30 @@ exp.elemSpecs = {
   outerSVG: {
     ID: document.getElementById('outer-svg'),
     origViewBox: document.getElementById('outer-svg').getAttribute('viewBox'),
-    origViewBoxX: parseFloat(document.getElementById('outer-svg').getAttribute('viewBox').split(' ')[0]),
-    origViewBoxY: parseFloat(document.getElementById('outer-svg').getAttribute('viewBox').split(' ')[1]),
-    origViewBoxWidth: parseFloat(document.getElementById('outer-svg').getAttribute('viewBox').split(' ')[2]),
-    origViewBoxHeight: parseFloat(document.getElementById('outer-svg').getAttribute('viewBox').split(' ')[3]),
+    origViewBoxX: parseFloat(
+      document
+        .getElementById('outer-svg')
+        .getAttribute('viewBox')
+        .split(' ')[0],
+    ),
+    origViewBoxY: parseFloat(
+      document
+        .getElementById('outer-svg')
+        .getAttribute('viewBox')
+        .split(' ')[1],
+    ),
+    origViewBoxWidth: parseFloat(
+      document
+        .getElementById('outer-svg')
+        .getAttribute('viewBox')
+        .split(' ')[2],
+    ),
+    origViewBoxHeight: parseFloat(
+      document
+        .getElementById('outer-svg')
+        .getAttribute('viewBox')
+        .split(' ')[3],
+    ),
   },
 };
 
@@ -232,7 +265,13 @@ exp.elemSpecs = {
 // ---------------------------------------------------------------------------------------------------------------------
 exp.elemSpecs.animAudioDur = {};
 const animAudioSrcs = [
-  touch1Src, famHedge1Src, testHedge1Src, testHedge2Src, famBox1Src, testBox1Src, testBox2Src,
+  touch1Src,
+  famHedge1Src,
+  testHedge1Src,
+  testHedge2Src,
+  famBox1Src,
+  testBox1Src,
+  testBox2Src,
 ];
 
 animAudioSrcs.forEach((src) => {
@@ -329,9 +368,13 @@ exp.elemSpecs.targets = {
     y: exp.elemSpecs.outerSVG.origViewBoxHeight - hedge.getBBox().height / 1.1,
   },
   // right side of screen as upper boundary
-  borderRight: exp.elemSpecs.outerSVG.origViewBoxWidth - balloonBlue.getBBox().width,
+  borderRight:
+    exp.elemSpecs.outerSVG.origViewBoxWidth - balloonBlue.getBBox().width,
   // calculate y coords for balloon (-20 for little distance from lower border)
-  groundY: exp.elemSpecs.outerSVG.origViewBoxHeight - balloonBlue.getBBox().height - 20,
+  groundY:
+    exp.elemSpecs.outerSVG.origViewBoxHeight -
+    balloonBlue.getBBox().height -
+    20,
   // define y coord for target to be right above the boxes
   aboveBoxesY: boxes1Front.getBBox().y - balloonBlue.getBBox().height,
   // partlyInBoxesY: boxes1Front.getBBox().y - balloonBlue.getBBox().height / 3,
@@ -355,73 +398,13 @@ exp.soundEffect = new Audio();
 
 // event touchstart only works for touchscreens
 // on first user interaction, later we adjust the source
-document.body.addEventListener('touchstart', () => {
-  exp.soundEffect.play();
-}, { capture: false, once: true });
-
-// ---------------------------------------------------------------------------------------------------------------------
-// NOT NEEDED FOR DEMO (since we download the video)
-// ASYNC PROMISIFIABLE VIDEO UPLOAD FUNCTION
-// ---------------------------------------------------------------------------------------------------------------------
-// async function endRecording() {
-//   // stop recorder and upload video
-//   mrec.stopRecorder();
-
-//   // show upload spinner
-//   switch (exp.subjData.lang) {
-//     case 'de':
-//       mrec.modalContent('<img src=\'images/spinner-upload-de.svg\' style="width: 75vw">', '#E1B4B4');
-//       break;
-//     case 'en':
-//       mrec.modalContent('<img src=\'images/spinner-upload-en.svg\' style="width: 75vw">', '#E1B4B4');
-//       break;
-//     default:
-//       console.log('error in setting textslideButtonText');
-//   }
-
-//   await pause(1000);
-
-//   const dt = new Date();
-
-//   const dtFormat = `${
-//     dt.getFullYear().toString().padStart(4, '0')}-${
-//     (dt.getMonth() + 1).toString().padStart(2, '0')}-${
-//     dt.getDate().toString().padStart(2, '0')}-${
-//     dt.getHours().toString().padStart(2, '0')}-${
-//     dt.getMinutes().toString().padStart(2, '0')}-${
-//     dt.getSeconds().toString().padStart(2, '0')}`;
-
-//   switch (exp.subjData.lang) {
-//     case 'de':
-//       mrec.uploadVideo(
-//         {
-//           fname: `gafo-${exp.subjData.subjID}-${dtFormat}`,
-//           uploadContent: '<img src=\'images/spinner-upload-de.svg\' style="width: 75vw">',
-//           uploadColor: '#E1B4B4',
-//           successContent: '<img src=\'images/spinner-done-de.svg\' style="width: 75vw">',
-//           successColor: '#D3F9D3',
-//         },
-//       );
-//       break;
-//     case 'en':
-//       mrec.uploadVideo(
-//         {
-//           fname: `gafo-${exp.subjData.subjID}-${dtFormat}`,
-//           uploadContent: '<img src=\'images/spinner-upload-en.svg\' style="width: 75vw">',
-//           uploadColor: '#E1B4B4',
-//           successContent: '<img src=\'images/spinner-done-en.svg\' style="width: 75vw">',
-//           successColor: '#D3F9D3',
-//         },
-//       );
-//       break;
-//     default:
-//       console.log('error in setting textslideButtonText');
-//   }
-
-//   await pause(1000);
-
-//   mrec.toggleModal();
-// }
+document.body.addEventListener(
+  'touchstart',
+  () => {
+    exp.soundEffect.play();
+  },
+  { capture: false, once: true },
+);
 
 // ---------------------------------------------------------------------------------------------------------------------
 // DEFINE EVENTLISTENER FUNCTIONS
@@ -432,9 +415,15 @@ document.body.addEventListener('touchstart', () => {
 // save in const variables in order to pass on event to function
 const handleWelcomeClick = (event) => {
   event.preventDefault();
-  document.getElementById('foreign-object-heading').replaceChild(txt.instructionsTouchHeading, txt.welcomeHeading);
-  document.getElementById('foreign-object-center-left').replaceChild(txt.instructionsTouchParagraph, txt.welcomeParagraph);
-  document.getElementById('foreign-object-center-right').replaceChild(txt.instructionsTouchImage, txt.familyImage);
+  document
+    .getElementById('foreign-object-heading')
+    .replaceChild(txt.instructionsTouchHeading, txt.welcomeHeading);
+  document
+    .getElementById('foreign-object-center-left')
+    .replaceChild(txt.instructionsTouchParagraph, txt.welcomeParagraph);
+  document
+    .getElementById('foreign-object-center-right')
+    .replaceChild(txt.instructionsTouchImage, txt.familyImage);
 
   switch (exp.subjData.lang) {
     case 'de':
@@ -454,7 +443,10 @@ const handleWelcomeClick = (event) => {
     // enable fullscreen mode
     openFullscreen();
   }
-  textslideButton.addEventListener('click', handleTransitionClick, { capture: false, once: true });
+  textslideButton.addEventListener('click', handleTransitionClick, {
+    capture: false,
+    once: true,
+  });
 };
 // ---------------------------------------------------------------------------------------------------------------------
 // RUNS WHEN TRANSITION BUTTON IS CLICKED (between touch, fam and test trials)
@@ -462,13 +454,16 @@ const handleWelcomeClick = (event) => {
 const handleTransitionClick = (event) => {
   event.preventDefault();
 
-  showSlide([experimentslide],
-    [textslide, textslideButton, clickBubble, speaker]);
+  showSlide(
+    [experimentslide],
+    [textslide, textslideButton, clickBubble, speaker],
+  );
 
   prepareTrial(exp);
   timeline = gsap.timeline({ paused: true });
   timeline.add(changeGaze(exp));
-  exp.responseLog[exp.trials.count].durationAnimationComplete = timeline.duration();
+  exp.responseLog[exp.trials.count].durationAnimationComplete =
+    timeline.duration();
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -486,7 +481,9 @@ const handleGoodbyeClick = async function tmp(event) {
     closeFullscreen();
   }
 
-  window.location.replace(`https://ccp-odc.eva.mpg.de/gafo-demo/goodbye.html?ID=${exp.subjData.subjID}`);
+  window.location.replace(
+    `https://ccp-odc.eva.mpg.de/gafo-demo/goodbye.html?ID=${exp.subjData.subjID}`,
+  );
 };
 // ---------------------------------------------------------------------------------------------------------------------
 // RUNS WHEN "weiter" BUTTON IS CLICKED
@@ -498,7 +495,10 @@ const handleExperimentslideButtonClick = async function tmp(event) {
   if (devmode) console.log('trial: ', exp.trials.count);
 
   // hide blurr canvas and button
-  showSlide([], [experimentslideButton, document.getElementById('cover-blurr')]);
+  showSlide(
+    [],
+    [experimentslideButton, document.getElementById('cover-blurr')],
+  );
 
   // set event listener to see whether participants click too early
   exp.elemSpecs.outerSVG.ID.addEventListener('click', handleEarlyClick, false);
@@ -512,28 +512,36 @@ const handleExperimentslideButtonClick = async function tmp(event) {
     exp.soundEffect.src = promptGeneralSrc;
     exp.soundEffect.play();
 
-  // for touch trials with voiceover
+    // for touch trials with voiceover
   } else if (exp.trials.type[exp.trials.count] === 'touch') {
     await playFullAudio(exp.soundEffect, promptTouchLongSrc);
 
-  // for tablet hedge version fam trials with voiceover
-  } else if (exp.trials.type[exp.trials.count] === 'fam'
-  && exp.trials.boxesNr[exp.trials.count] === 0) {
+    // for tablet hedge version fam trials with voiceover
+  } else if (
+    exp.trials.type[exp.trials.count] === 'fam' &&
+    exp.trials.boxesNr[exp.trials.count] === 0
+  ) {
     await playFullAudio(exp.soundEffect, promptHedgeSrc);
 
-  // for tablet hedge version test trials with voiceover
-  } else if (exp.trials.type[exp.trials.count] === 'test'
-  && exp.trials.boxesNr[exp.trials.count] === 0) {
+    // for tablet hedge version test trials with voiceover
+  } else if (
+    exp.trials.type[exp.trials.count] === 'test' &&
+    exp.trials.boxesNr[exp.trials.count] === 0
+  ) {
     await playFullAudio(exp.soundEffect, testHedge3Src);
 
-  // for PC box version fam trials with voice over
-  } else if (exp.trials.type[exp.trials.count] === 'fam'
-  && exp.trials.boxesNr[exp.trials.count] > 0) {
+    // for PC box version fam trials with voice over
+  } else if (
+    exp.trials.type[exp.trials.count] === 'fam' &&
+    exp.trials.boxesNr[exp.trials.count] > 0
+  ) {
     await playFullAudio(exp.soundEffect, promptBoxSrc);
 
-  // for PC box version test trials with voice over
-  } else if (exp.trials.type[exp.trials.count] === 'test'
-      && exp.trials.boxesNr[exp.trials.count] > 0) {
+    // for PC box version test trials with voice over
+  } else if (
+    exp.trials.type[exp.trials.count] === 'test' &&
+    exp.trials.boxesNr[exp.trials.count] > 0
+  ) {
     await playFullAudio(exp.soundEffect, testBox3Src);
   }
 
@@ -546,29 +554,53 @@ const handleExperimentslideButtonClick = async function tmp(event) {
   targetClickTimer5sec = window.setTimeout(noTargetClickWithin5sec, 5000);
 
   // remove event listener that checks whether participants clicked too early
-  exp.elemSpecs.outerSVG.ID.removeEventListener('click', handleEarlyClick, false);
+  exp.elemSpecs.outerSVG.ID.removeEventListener(
+    'click',
+    handleEarlyClick,
+    false,
+  );
 
   // for touch trials, particiapnts can click in clickable area
   if (exp.trials.type[exp.trials.count] === 'touch') {
     clickableArea.setAttribute('pointer-events', 'all');
-    clickableArea.addEventListener('click', handleTargetClick, { capture: false, once: true });
+    clickableArea.addEventListener('click', handleTargetClick, {
+      capture: false,
+      once: true,
+    });
 
-  // for trials with hedge, participants shoudl click on there
+    // for trials with hedge, participants shoudl click on there
   } else if (exp.trials.boxesNr[exp.trials.count] === 0) {
     clickableArea.setAttribute('pointer-events', 'none');
-    hedge.addEventListener('click', handleTargetClick, { capture: false, once: true });
+    hedge.addEventListener('click', handleTargetClick, {
+      capture: false,
+      once: true,
+    });
 
-  // for trials with boxes, participants should click on them
+    // for trials with boxes, participants should click on them
   } else if (exp.trials.boxesNr[exp.trials.count] > 0) {
-    const boxesCurrentFront = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count]}-front"]`);
-    const boxesCurrentBack = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count]}-back"]`);
+    const boxesCurrentFront = document.querySelector(
+      `[id$= "boxes${exp.trials.boxesNr[exp.trials.count]}-front"]`,
+    );
+    const boxesCurrentBack = document.querySelector(
+      `[id$= "boxes${exp.trials.boxesNr[exp.trials.count]}-back"]`,
+    );
 
     clickableArea.setAttribute('pointer-events', 'none');
-    boxesCurrentFront.addEventListener('click', handleTargetClick, { capture: false, once: true });
-    boxesCurrentBack.addEventListener('click', handleTargetClick, { capture: false, once: true });
+    boxesCurrentFront.addEventListener('click', handleTargetClick, {
+      capture: false,
+      once: true,
+    });
+    boxesCurrentBack.addEventListener('click', handleTargetClick, {
+      capture: false,
+      once: true,
+    });
   }
 
-  exp.elemSpecs.outerSVG.ID.addEventListener('click', handleWrongAreaClick, false);
+  exp.elemSpecs.outerSVG.ID.addEventListener(
+    'click',
+    handleWrongAreaClick,
+    false,
+  );
 };
 // ---------------------------------------------------------------------------------------------------------------------
 // RUNS WHEN TARGET (HEDGE OR BOX) IS CLICKED
@@ -587,7 +619,11 @@ const handleTargetClick = async function tmp(event) {
   clearTimeout(targetClickTimer5sec);
 
   // remove eventListener that was responsible for "wrong input" sound
-  exp.elemSpecs.outerSVG.ID.removeEventListener('click', handleWrongAreaClick, false);
+  exp.elemSpecs.outerSVG.ID.removeEventListener(
+    'click',
+    handleWrongAreaClick,
+    false,
+  );
   event.preventDefault();
 
   // function to save all relevant information
@@ -613,74 +649,146 @@ const handleTargetClick = async function tmp(event) {
     prepareTrial(exp);
     timeline = gsap.timeline({ paused: true });
     timeline.add(changeGaze(exp));
-    exp.responseLog[exp.trials.count].durationAnimationComplete = timeline.duration();
+    exp.responseLog[exp.trials.count].durationAnimationComplete =
+      timeline.duration();
 
-  // for transition from touching into familiarization
+    // for transition from touching into familiarization
   } else if (exp.trials.count === exp.trials.touchNr) {
-    document.getElementById('foreign-object-heading').replaceChild(txt.instructionsFamHeading, txt.instructionsTouchHeading);
-    document.getElementById('foreign-object-center-left').replaceChild(txt.instructionsFamParagraph, txt.instructionsTouchParagraph);
-    document.getElementById('foreign-object-center-right').replaceChild(txt.instructionsFamImage, txt.instructionsTouchImage);
+    document
+      .getElementById('foreign-object-heading')
+      .replaceChild(txt.instructionsFamHeading, txt.instructionsTouchHeading);
+    document
+      .getElementById('foreign-object-center-left')
+      .replaceChild(
+        txt.instructionsFamParagraph,
+        txt.instructionsTouchParagraph,
+      );
+    document
+      .getElementById('foreign-object-center-right')
+      .replaceChild(txt.instructionsFamImage, txt.instructionsTouchImage);
 
-    textslideButton.addEventListener('click', handleTransitionClick, { capture: false, once: true });
+    textslideButton.addEventListener('click', handleTransitionClick, {
+      capture: false,
+      once: true,
+    });
 
-    showSlide([textslide, textslideButton],
-      [experimentslide,
-        hedge, pig, monkey, sheep,
-        balloonBlue, balloonRed, balloonYellow, balloonGreen, speaker]);
+    showSlide(
+      [textslide, textslideButton],
+      [
+        experimentslide,
+        hedge,
+        pig,
+        monkey,
+        sheep,
+        balloonBlue,
+        balloonRed,
+        balloonYellow,
+        balloonGreen,
+        speaker,
+      ],
+    );
 
     // if last trial had boxes, then hide them!
     if (exp.trials.boxesNr[exp.trials.count - 1] > 0) {
-      const boxesCurrentFront = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-front"]`);
-      const boxesCurrentBack = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-back"]`);
+      const boxesCurrentFront = document.querySelector(
+        `[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-front"]`,
+      );
+      const boxesCurrentBack = document.querySelector(
+        `[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-back"]`,
+      );
       showSlide([], [boxesCurrentFront, boxesCurrentBack]);
     }
 
-  // for familiarization trials
+    // for familiarization trials
   } else if (exp.trials.count < exp.trials.touchNr + exp.trials.famNr) {
     prepareTrial(exp);
     timeline = gsap.timeline({ paused: true });
     timeline.add(changeGaze(exp));
-    exp.responseLog[exp.trials.count].durationAnimationComplete = timeline.duration();
+    exp.responseLog[exp.trials.count].durationAnimationComplete =
+      timeline.duration();
 
-  // for transition from familiarization to test trials
+    // for transition from familiarization to test trials
   } else if (exp.trials.count === exp.trials.touchNr + exp.trials.famNr) {
-    document.getElementById('foreign-object-heading').replaceChild(txt.instructionsTestHeading, txt.instructionsFamHeading);
-    document.getElementById('foreign-object-center-left').replaceChild(txt.instructionsTestParagraph, txt.instructionsFamParagraph);
-    document.getElementById('foreign-object-center-right').replaceChild(txt.instructionsTestImage, txt.instructionsFamImage);
+    document
+      .getElementById('foreign-object-heading')
+      .replaceChild(txt.instructionsTestHeading, txt.instructionsFamHeading);
+    document
+      .getElementById('foreign-object-center-left')
+      .replaceChild(
+        txt.instructionsTestParagraph,
+        txt.instructionsFamParagraph,
+      );
+    document
+      .getElementById('foreign-object-center-right')
+      .replaceChild(txt.instructionsTestImage, txt.instructionsFamImage);
 
-    textslideButton.addEventListener('click', handleTransitionClick, { capture: false, once: true });
+    textslideButton.addEventListener('click', handleTransitionClick, {
+      capture: false,
+      once: true,
+    });
 
-    showSlide([textslide, textslideButton],
-      [experimentslide,
-        hedge, pig, monkey, sheep,
-        balloonBlue, balloonRed, balloonYellow, balloonGreen, speaker]);
+    showSlide(
+      [textslide, textslideButton],
+      [
+        experimentslide,
+        hedge,
+        pig,
+        monkey,
+        sheep,
+        balloonBlue,
+        balloonRed,
+        balloonYellow,
+        balloonGreen,
+        speaker,
+      ],
+    );
 
     // if last trial had boxes, then hide them!
     if (exp.trials.boxesNr[exp.trials.count - 1] > 0) {
-      const boxesCurrentFront = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-front"]`);
-      const boxesCurrentBack = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-back"]`);
+      const boxesCurrentFront = document.querySelector(
+        `[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-front"]`,
+      );
+      const boxesCurrentBack = document.querySelector(
+        `[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-back"]`,
+      );
       showSlide([], [boxesCurrentFront, boxesCurrentBack]);
     }
 
-  // for test trials
+    // for test trials
   } else if (exp.trials.count < exp.trials.totalNr) {
     prepareTrial(exp);
     timeline = gsap.timeline({ paused: true });
     timeline.add(changeGaze(exp));
-    exp.responseLog[exp.trials.count].durationAnimationComplete = timeline.duration();
+    exp.responseLog[exp.trials.count].durationAnimationComplete =
+      timeline.duration();
 
-  // for goodbye after test trials
+    // for goodbye after test trials
   } else if (exp.trials.count === exp.trials.totalNr) {
     // hide everything for duration of video uploading
-    showSlide([],
-      [experimentslide,
-        hedge, pig, monkey, sheep,
-        balloonBlue, balloonRed, balloonYellow, balloonGreen, textslideButton]);
+    showSlide(
+      [],
+      [
+        experimentslide,
+        hedge,
+        pig,
+        monkey,
+        sheep,
+        balloonBlue,
+        balloonRed,
+        balloonYellow,
+        balloonGreen,
+        textslideButton,
+      ],
+    );
 
     // if last trial had boxes, then hide them!
     if (exp.trials.boxesNr[exp.trials.count - 1] > 0) {
-      const boxesCurrentFront = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-front"]`);
-      const boxesCurrentBack = document.querySelector(`[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-back"]`);
+      const boxesCurrentFront = document.querySelector(
+        `[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-front"]`,
+      );
+      const boxesCurrentBack = document.querySelector(
+        `[id$= "boxes${exp.trials.boxesNr[exp.trials.count - 1]}-back"]`,
+      );
       showSlide([], [boxesCurrentFront, boxesCurrentBack]);
     }
 
@@ -692,17 +800,36 @@ const handleTargetClick = async function tmp(event) {
       mrec.stopRecorder();
 
       // give some time to create Video Blob
-      setTimeout(() => mrec.downloadVideo(exp.subjData.subjID), 1000);
+
+      const day = new Date().toISOString().substr(0, 10);
+      const time = new Date().toISOString().substr(11, 8);
+
+      setTimeout(
+        () =>
+          mrec.downloadVideo(
+            `balloontask-${exp.subjData.subjID}-${day}-${time}`,
+          ),
+        1000,
+      );
     }
 
     // NOT NEEDED FOR DEMO
     // if (!exp.subjData.iOSSafari) await endRecording();
 
-    document.getElementById('foreign-object-heading').replaceChild(txt.goodbyeHeading, txt.instructionsTestHeading);
-    document.getElementById('foreign-object-center-left').replaceChild(txt.goodbyeParagraph, txt.instructionsTestParagraph);
-    document.getElementById('foreign-object-center-right').replaceChild(txt.familyImage, txt.instructionsTestImage);
+    document
+      .getElementById('foreign-object-heading')
+      .replaceChild(txt.goodbyeHeading, txt.instructionsTestHeading);
+    document
+      .getElementById('foreign-object-center-left')
+      .replaceChild(txt.goodbyeParagraph, txt.instructionsTestParagraph);
+    document
+      .getElementById('foreign-object-center-right')
+      .replaceChild(txt.familyImage, txt.instructionsTestImage);
 
-    textslideButton.addEventListener('click', handleGoodbyeClick, { capture: false, once: true });
+    textslideButton.addEventListener('click', handleGoodbyeClick, {
+      capture: false,
+      once: true,
+    });
 
     switch (exp.subjData.lang) {
       case 'de':
@@ -715,10 +842,20 @@ const handleTargetClick = async function tmp(event) {
         console.log('error in setting textslideButtonText');
     }
 
-    showSlide([textslide, speaker, textslideButton],
-      [experimentslide,
-        hedge, pig, monkey, sheep,
-        balloonBlue, balloonRed, balloonYellow, balloonGreen]);
+    showSlide(
+      [textslide, speaker, textslideButton],
+      [
+        experimentslide,
+        hedge,
+        pig,
+        monkey,
+        sheep,
+        balloonBlue,
+        balloonRed,
+        balloonYellow,
+        balloonGreen,
+      ],
+    );
   }
 };
 // ---------------------------------------------------------------------------------------------------------------------
@@ -732,8 +869,10 @@ const handleEarlyClick = (event) => {
 const handleWrongAreaClick = (event) => {
   event.preventDefault();
   // from participant screen size, calculate where there was a click
-  const screenScalingHeight = exp.elemSpecs.outerSVG.origViewBoxHeight / exp.subjData.offsetHeight;
-  const clickY = event.clientY - exp.elemSpecs.outerSVG.ID.getBoundingClientRect().top;
+  const screenScalingHeight =
+    exp.elemSpecs.outerSVG.origViewBoxHeight / exp.subjData.offsetHeight;
+  const clickY =
+    event.clientY - exp.elemSpecs.outerSVG.ID.getBoundingClientRect().top;
   const clickScaledY = screenScalingHeight * clickY;
   if (clickScaledY < hedge.getBBox().y) {
     // count how often a participant clicked in the wrong area
@@ -747,11 +886,11 @@ const handleSpeakerClick = async function tmp(event) {
   event.preventDefault();
 
   if (exp.trials.count === 0) {
-  // play instructions audio, only show button once audio is finished playing
+    // play instructions audio, only show button once audio is finished playing
     showSlide([], [textslideButton]);
     await playFullAudio(exp.soundEffect, welcomeSrc);
     showSlide([textslideButton], []);
-  // for goodbye message
+    // for goodbye message
   } else if (exp.trials.count === exp.trials.totalNr) {
     await playFullAudio(exp.soundEffect, goodbyeSrc);
   }
@@ -764,12 +903,16 @@ const noTargetClickWithin5sec = () => {
   if (exp.trials.type[exp.trials.count] === 'touch') {
     exp.soundEffect.src = promptTouchSrc;
     exp.soundEffect.play();
-  } else if (exp.trials.type[exp.trials.count] !== 'touch'
-  && exp.trials.boxesNr[exp.trials.count] === 0) {
+  } else if (
+    exp.trials.type[exp.trials.count] !== 'touch' &&
+    exp.trials.boxesNr[exp.trials.count] === 0
+  ) {
     exp.soundEffect.src = promptHedgeSrc;
     exp.soundEffect.play();
-  } else if (exp.trials.type[exp.trials.count] !== 'touch'
-  && exp.trials.boxesNr[exp.trials.count] > 0) {
+  } else if (
+    exp.trials.type[exp.trials.count] !== 'touch' &&
+    exp.trials.boxesNr[exp.trials.count] > 0
+  ) {
     exp.soundEffect.src = promptBoxSrc;
     exp.soundEffect.play();
   }
@@ -778,18 +921,36 @@ const noTargetClickWithin5sec = () => {
 // ACTUALLY RUNNING:
 // ---------------------------------------------------------------------------------------------------------------------
 // INSTRUCTIONS: show slide
-document.getElementById('foreign-object-heading').appendChild(txt.welcomeHeading);
-document.getElementById('foreign-object-center-left').appendChild(txt.welcomeParagraph);
-document.getElementById('foreign-object-center-right').appendChild(txt.familyImage);
+document
+  .getElementById('foreign-object-heading')
+  .appendChild(txt.welcomeHeading);
+document
+  .getElementById('foreign-object-center-left')
+  .appendChild(txt.welcomeParagraph);
+document
+  .getElementById('foreign-object-center-right')
+  .appendChild(txt.familyImage);
 
-showSlide([textslide],
+showSlide(
+  [textslide],
   // first hide buttons, participants can only start once they listened to the instructions
-  [experimentslide, speaker, clickableArea]);
+  [experimentslide, speaker, clickableArea],
+);
 
 // add event listeners
-textslideButton.addEventListener('click', handleWelcomeClick, { capture: false, once: true });
-experimentslideButton.addEventListener('click', handleExperimentslideButtonClick, { capture: false });
-speaker.addEventListener('click', handleSpeakerClick, { capture: false, once: false });
+textslideButton.addEventListener('click', handleWelcomeClick, {
+  capture: false,
+  once: true,
+});
+experimentslideButton.addEventListener(
+  'click',
+  handleExperimentslideButtonClick,
+  { capture: false },
+);
+speaker.addEventListener('click', handleSpeakerClick, {
+  capture: false,
+  once: false,
+});
 
 // initially check device orientation
 if (window.innerHeight > window.innerWidth) {
@@ -805,5 +966,8 @@ window.addEventListener('orientationchange', () => {
   };
   // the orientationchange event is triggered before the rotation is complete.
   // therefore, await resize and then evaluate innerHeight & innerWidth
-  window.addEventListener('resize', afterOrientationChange, { capture: false, once: true });
+  window.addEventListener('resize', afterOrientationChange, {
+    capture: false,
+    once: true,
+  });
 });
