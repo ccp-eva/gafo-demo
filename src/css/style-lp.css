@@ -82,3 +82,8 @@ body {
 #logo {
   max-height: 8rem;
 }
+
+#gif-item {
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+}
